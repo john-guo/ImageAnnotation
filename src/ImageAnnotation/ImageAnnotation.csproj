@@ -52,6 +52,7 @@
       <DependentUpon>AnnotationEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="AnnotationManager.cs" />
+    <Compile Include="GeometryAnnotations\PolygonAnnotation.cs" />
     <Compile Include="SimpleProvider.cs" />
     <Compile Include="GeometryAnnotations\RectangleAnnotation.cs" />
     <Compile Include="IAnnotationProvider.cs" />
