@@ -42,7 +42,7 @@
         <local:AnnotationCanvas x:Name="drawArea"
             Image="{Binding Image, ElementName=ae}" 
             Annotations="{Binding Annotations, ElementName=ae}"
-            SelectedAnnotation="{Binding SelectedAnnotation, ElementName=ae}"
+            SelectedAnnotation="{Binding SelectedAnnotation, ElementName=ae, Mode=TwoWay}"
             Remain="10, 10"
             ClipToBounds="True"
         />
