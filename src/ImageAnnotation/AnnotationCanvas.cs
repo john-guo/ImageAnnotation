@@ -57,7 +57,7 @@ namespace ImageAnnotation
         public static readonly DependencyProperty RemainProperty = DependencyProperty.Register(nameof(Remain), typeof(Thickness), typeof(AnnotationCanvas), new PropertyMetadata(PropertyChangedRefresh));
         public static readonly DependencyProperty ProviderProperty = DependencyProperty.Register(nameof(Provider), typeof(IAnnotationProvider), typeof(AnnotationCanvas), new PropertyMetadata(DrawModeChanged));
         public static readonly DependencyProperty ShapeColorProperty = DependencyProperty.Register(nameof(ShapeColor), typeof(Color), typeof(AnnotationCanvas), new PropertyMetadata(Colors.Black));
-        public static readonly DependencyProperty ShapeBorderProperty = DependencyProperty.Register(nameof(ShapeBorder), typeof(double), typeof(AnnotationCanvas), new PropertyMetadata(3.0));
+        public static readonly DependencyProperty ShapeThicknessProperty = DependencyProperty.Register(nameof(ShapeThickness), typeof(double), typeof(AnnotationCanvas), new PropertyMetadata(3.0));
         public static readonly DependencyProperty DrawModeProperty = DependencyProperty.Register(nameof(DrawMode), typeof(bool), typeof(AnnotationCanvas), new PropertyMetadata(false, DrawModeChanged, DrawModeCoerceValue));
         public static readonly DependencyProperty PivotRadiusProperty = DependencyProperty.Register(nameof(PivotRadius), typeof(double), typeof(AnnotationCanvas), new PropertyMetadata(7.0));
         public static readonly DependencyProperty PivotBrushProperty = DependencyProperty.Register(nameof(PivotBrush), typeof(Brush), typeof(AnnotationCanvas), new PropertyMetadata(new SolidColorBrush(Colors.Blue)));
@@ -197,15 +197,15 @@ namespace ImageAnnotation
             }
         }
 
-        public double ShapeBorder
+        public double ShapeThickness
         {
             get
             {
-                return (double)GetValue(ShapeBorderProperty);
+                return (double)GetValue(ShapeThicknessProperty);
             }
             set
             {
-                SetValue(ShapeBorderProperty, value);
+                SetValue(ShapeThicknessProperty, value);
             }
         }
 
@@ -325,7 +325,7 @@ namespace ImageAnnotation
         private void NewDrawAnnotation()
         {
             var annotation = Provider.Create();
-            annotation.SetParameters(ShapeColor, ShapeBorder);
+            annotation.SetParameters(ShapeColor, ShapeThickness);
             _currentAnnotation = annotation;
         }
 
@@ -660,6 +660,14 @@ namespace ImageAnnotation
         protected override void OnMouseLeave(MouseEventArgs e)
         {
             _lastPos = e.GetPosition(this);
+        }
+
+        public void RemoveSelected()
+        {
+            if (SelectedAnnotation == null)
+                return;
+            Annotations.Remove(SelectedAnnotation);
+            CancelSelect();
         }
     }
 }

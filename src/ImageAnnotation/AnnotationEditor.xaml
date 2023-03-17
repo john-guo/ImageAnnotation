@@ -7,44 +7,68 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" x:Name="ae"
              >
-    <DockPanel>
-        <ItemsControl x:Name="drawTools" DockPanel.Dock="Top" >
-            <ItemsControl.ItemTemplate >
-                <DataTemplate >
-                    <RadioButton 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ItemsControl x:Name="drawTools" Grid.Column="0" >
+                <ItemsControl.ItemTemplate >
+                    <DataTemplate >
+                        <RadioButton 
                         Background="{Binding Path=Background, ElementName=ae}"
                         Width="20" Height="20" Margin="2" ToolTip="{Binding Description}" BorderThickness="1" GroupName="drawTool" IsChecked="{Binding Selected}">
-                        <RadioButton.Content>
-                            <Image Source="{Binding Icon}" Width="15" Height="15"/>
-                        </RadioButton.Content>
-                        <RadioButton.Template>
-                            <ControlTemplate TargetType="RadioButton">
-                                <ToggleButton
+                            <RadioButton.Content>
+                                <Image Source="{Binding Icon}" Width="15" Height="15"/>
+                            </RadioButton.Content>
+                            <RadioButton.Template>
+                                <ControlTemplate TargetType="RadioButton">
+                                    <ToggleButton
                                     IsThreeState="False"
                                     Command="{Binding ChooseTool, ElementName=ae}" 
                                     CommandParameter="{Binding}"
                                     Background="{TemplateBinding Background}" 
                                     Content="{Binding Path=Content, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RadioButton}}}" 
                                     IsChecked="{Binding Path=IsChecked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RadioButton}}}">
-                                </ToggleButton>
-                            </ControlTemplate>
-                        </RadioButton.Template>
-                    </RadioButton>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+                                    </ToggleButton>
+                                </ControlTemplate>
+                            </RadioButton.Template>
+                        </RadioButton>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
 
-        <local:AnnotationCanvas x:Name="drawArea"
+            <WrapPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Separator Margin="5, 0"/>
+                <Button  
+                    BorderThickness="1"
+                    Width="20" Height="20" Margin="2" 
+                    Background="{Binding Path=Background, ElementName=ae}"
+                    Command="{Binding Remove, ElementName=ae}">
+                    <Image Source="pack://application:,,,/ImageAnnotation;component/Assets/remove.png" Width="15" Height="15"/>
+                </Button>
+            </WrapPanel>
+        </Grid>
+        <local:AnnotationCanvas 
+            Grid.Row="1"
+            x:Name="drawArea"
             Image="{Binding Image, ElementName=ae}" 
             Annotations="{Binding Annotations, ElementName=ae}"
             SelectedAnnotation="{Binding SelectedAnnotation, ElementName=ae, Mode=TwoWay}"
             Remain="10, 10"
             ClipToBounds="True"
+            ShapeColor="{Binding ShapeColor, ElementName=ae}"
+            ShapeThickness="{Binding ShapeThickness, ElementName=ae}"
         />
-    </DockPanel>
+    </Grid>
 </UserControl>

@@ -72,11 +72,6 @@ namespace ImageAnnotation
             return false;
         }
 
-        public override int GetHashCode()
-        {
-            return ToString().GetHashCode();
-        }
-
         public override string ToString()
         {
             return $"{Name}_{X}_{Y}_{Width}_{Height}";
