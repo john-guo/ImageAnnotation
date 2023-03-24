@@ -62,16 +62,6 @@ namespace ImageAnnotation
         public abstract Point Move(Point point, double dx, double dy);
         public abstract List<Point> GetVertices();
 
-        public override bool Equals(object obj)
-        {
-            if (obj is GeometryAnnotation ga)
-            {
-                return Name == Name && X == ga.X && Y == ga.Y && Width == ga.Width && Height == ga.Height;
-            }
-
-            return false;
-        }
-
         public override string ToString()
         {
             return $"{Name}_{X}_{Y}_{Width}_{Height}";
